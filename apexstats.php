@@ -1,7 +1,7 @@
 <?php
 header('Content-type: text/plain');
 
-$apikey = '';
+$apikey = 'ajPrMP0WDr5VFAhXXg9D';
 
 $request = strtolower($_GET['command']);
 if (!$request)
@@ -62,31 +62,31 @@ function _getJSON($url)
 };
 
 // Romanize numbers for better aesthetic
-function romanize($num)  
-{ 
+function romanize($num)
+{
     // Be sure to convert the given parameter into an integer
     $n = intval($num);
-    $result = ''; 
- 
-    // Declare a lookup array that we will use to traverse the number: 
+    $result = '';
+
+    // Declare a lookup array that we will use to traverse the number:
     $lookup = array(
         'IV' => 4, 'III' => 3, 'II' => 2, 'I' => 1
-    ); 
- 
-    foreach ($lookup as $roman => $value)  
+    );
+
+    foreach ($lookup as $roman => $value)
     {
         // Look for number of matches
-        $matches = intval($n / $value); 
- 
-        // Concatenate characters
-        $result .= str_repeat($roman, $matches); 
- 
-        // Substract that from the number 
-        $n = $n % $value; 
-    } 
+        $matches = intval($n / $value);
 
-    return $result; 
-}; 
+        // Concatenate characters
+        $result .= str_repeat($roman, $matches);
+
+        // Substract that from the number
+        $n = $n % $value;
+    }
+
+    return $result;
+};
 
 if ($request == 'stats')
 {
@@ -110,15 +110,15 @@ if ($request == 'stats')
 if ($request == 'rank')
 {
 	$data = _getJSON('https://api.mozambiquehe.re/bridge?version=4&platform=' . $machine . '&player=' . $player . '&auth=' . $apikey);
-     
+
 	$rdiv = intval($data['global']['rank']['rankDiv']);
-	 
+
         $rank = _getJSON('https://api.mozambiquehe.re/bridge?version=4&platform=' . $machine . '&player=' . $player . '&auth=' . $apikey);
-        
+
         echo " $player Apex Rank: " . $rank['global']['rank']['rankName'] . " " . romanize($rdiv) .  " 「" . $rank['global']['rank']['rankScore'] . "ᴿᴾ」";
 
     // More Explained Rank info output
     // echo "Apex Rank: ".$result['global']['rank']['rankName']." ".$result['global']['rank']['rankDiv']." ";
     // echo "Score: ".$result['global']['rank']['rankScore'];
-    
+
 };
